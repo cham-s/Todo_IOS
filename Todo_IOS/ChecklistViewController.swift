@@ -28,6 +28,13 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddItemViewController
             controller.delegate = self
+        } else if segue.identifier == "EditItem" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! AddItemViewController
+            controller.delegate = self
+            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                controller.itemToEdit = items[indexPath.row]
+            }
         }
     }
     
@@ -54,18 +61,32 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         let item = items[indexPath.row]
         
         if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-            if item.checked {
-                cell.accessoryType = .Checkmark
-            } else {
-                cell.accessoryType = .None
-            }
+            configureCheckMarkForCell(cell, withCheckItemListItem: item)
             item.toggleChecked()
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        items.removeAtIndex(indexPath.row)
+        let indexPaths = [indexPath]
+        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+    }
+    
     // MARK: - AddItemViewController Delegate
     func addItemViewControllerDidCancel(controller: AddItemViewController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func addItemViewController(controller: AddItemViewController, didFinishEdittingItem item:CheckListItem) {
+        if let index = items.indexOf(item) {
+            print("index on row : \(index)")
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+                configureCheckMarkForCell(cell, withCheckItemListItem: item)
+                tableView.reloadData()
+            }
+        }
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -79,9 +100,15 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        items.removeAtIndex(indexPath.row)
-        let indexPaths = [indexPath]
-        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+    // MARK: - Custom Methods
+    
+    func configureCheckMarkForCell(cell: UITableViewCell, withCheckItemListItem item: CheckListItem) {
+        let label = cell.viewWithTag(1001) as! UILabel
+        
+        if item.checked {
+            label.text = "√"
+        } else {
+            label.text = ""
+        }
     }
 }
