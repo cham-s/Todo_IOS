@@ -2,7 +2,7 @@
 //  ChecklistViewController.swift
 //  Todo_IOS
 //
-//  Created by gecko on 02/06/16.
+//  Created by cham-s on 02/06/16.
 //  Copyright © 2016 StellarTech Media. All rights reserved.
 //
 
@@ -58,5 +58,19 @@ class ChecklistViewController: UITableViewController {
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        items.removeAtIndex(indexPath.row)
+        let indexPaths = [indexPath]
+        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+    }
+    @IBAction func addItem(){
+        let newRowIndex = items.count
+        let item = CheckListItem()
+        item.text = "I am a new row"
+        items.append(item)
+        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+    }
 }

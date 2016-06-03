@@ -2,7 +2,7 @@
 //  CheckListItem.swift
 //  Todo_IOS
 //
-//  Created by gecko on 03/06/16.
+//  Created by cham-s on 03/06/16.
 //  Copyright © 2016 StellarTech Media. All rights reserved.
 //
 
