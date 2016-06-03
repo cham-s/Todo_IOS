@@ -13,7 +13,6 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     var items = [CheckListItem]()
     
     required init?(coder aDecoder: NSCoder) {
-        let item = CheckListItem()
         super.init(coder: aDecoder)
         loadItems()
     }

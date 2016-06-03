@@ -119,6 +119,28 @@ FhbiiJo
             </objects>
             <point key="canvasLocation" x="2576" y="368"/>
         </scene>
+        <!--Categories-->
+        <scene sceneID="rpE-AG-LeW">
+            <objects>
+                <tableViewController id="gjL-54-2HU" customClass="AllListViewController" customModule="Todo_IOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kND-H0-HCr">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="gjL-54-2HU" id="2g6-hM-5yE"/>
+                            <outlet property="delegate" destination="gjL-54-2HU" id="m28-xg-7mo"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Categories" id="Fh8-4i-XRb"/>
+                    <connections>
+                        <segue destination="HPJ-hj-iHe" kind="show" identifier="ShowList" id="Wng-Mx-c0n"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DXv-01-XDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="454" y="368"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="A1A-Gh-QPo">
             <objects>
@@ -130,12 +152,12 @@ FhbiiJo
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="HPJ-hj-iHe" kind="relationship" relationship="rootViewController" id="CHa-aM-R9g"/>
+                        <segue destination="gjL-54-2HU" kind="relationship" relationship="rootViewController" id="PT4-Be-4WK"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sj-Sc-S7N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="322" y="368"/>
+            <point key="canvasLocation" x="-253" y="351"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XWR-0o-nkh">
