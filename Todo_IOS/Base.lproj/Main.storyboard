@@ -39,7 +39,7 @@
                     <navigationItem key="navigationItem" title="List" id="Az3-qG-vmQ">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="60U-MQ-mDJ">
                             <connections>
-                                <segue destination="YkK-vN-Vwc" kind="presentation" id="iUO-Zy-DBu"/>
+                                <segue destination="YkK-vN-Vwc" kind="presentation" identifier="AddItem" id="iUO-Zy-DBu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
