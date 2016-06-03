@@ -8,25 +8,45 @@
 
 import UIKit
 
+protocol AddItemViewControllerDelegate: class {
+    func addItemViewControllerDidCancel(controller: AddItemViewController)
+    func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: CheckListItem)
+}
 
-class AddItemViewController: UITableViewController {
+class AddItemViewController: UITableViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var newItemTextField: UITextField!
+    @IBOutlet weak var doneButtonBar: UIBarButtonItem!
+    weak var delegate: AddItemViewControllerDelegate?
     
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         return nil
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        newItemTextField.becomeFirstResponder()
+    }
 
+    // MARK: UITexField Delegate
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let oldText: NSString = textField.text!
+        let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
+        doneButtonBar.enabled = newText.length > 0
+        return true
+    }
     
     @IBAction func cancel() {
         
-        dismissViewControllerAnimated(true, completion: nil)
+        delegate?.addItemViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
-        print("Item contain in the textfield : \(newItemTextField.text!)")
-        dismissViewControllerAnimated(true, completion: nil)
+        let item = CheckListItem()
+        item.text = newItemTextField.text!
+        item.checked = false
+        delegate?.addItemViewController(self, didFinishAddingItem: item)
     }
 }
