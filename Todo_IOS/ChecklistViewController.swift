@@ -14,13 +14,8 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     
     required init?(coder aDecoder: NSCoder) {
         let item = CheckListItem()
-        item.text = "Do the Laundry"
-        items.append(item)
-        let item2 = CheckListItem()
-        item2.text = "Walk the Pet"
-        items.append(item)
-        
         super.init(coder: aDecoder)
+        loadItems()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -65,22 +60,23 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
             item.toggleChecked()
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        saveItemsData()
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         items.removeAtIndex(indexPath.row)
         let indexPaths = [indexPath]
         tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        saveItemsData()
     }
     
-    // MARK: - AddItemViewController Delegate
+    // MARK: - AddItemViewCon‘‘troller Delegate
     func addItemViewControllerDidCancel(controller: AddItemViewController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     func addItemViewController(controller: AddItemViewController, didFinishEdittingItem item:CheckListItem) {
         if let index = items.indexOf(item) {
-            print("index on row : \(index)")
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             if let cell = tableView.cellForRowAtIndexPath(indexPath) {
                 configureCheckMarkForCell(cell, withCheckItemListItem: item)
@@ -88,6 +84,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
             }
         }
         dismissViewControllerAnimated(true, completion: nil)
+        saveItemsData()
     }
     
     func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: CheckListItem) {
@@ -98,6 +95,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
         
         dismissViewControllerAnimated(true, completion: nil)
+        saveItemsData()
     }
     
     // MARK: - Custom Methods
@@ -109,6 +107,36 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
             label.text = "√"
         } else {
             label.text = ""
+        }
+    }
+    func saveItemsData() {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        archiver.encodeObject(items, forKey: "Items")
+        archiver.finishEncoding()
+        data.writeToFile(dataFilePath(), atomically: true)
+        
+    }
+    
+    func documentDirectory() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        
+        return paths[0]
+    }
+    
+    func dataFilePath() -> String {
+        return (documentDirectory() as NSString)
+        .stringByAppendingString("/Checklists.plist")
+    }
+    
+    func loadItems() {
+        let path = dataFilePath()
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+            if let data = NSData(contentsOfFile: path) {
+                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+                items = unarchiver.decodeObjectForKey("Items") as! [CheckListItem]
+                unarchiver.finishDecoding()
+            }
         }
     }
 }
