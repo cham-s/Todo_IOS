@@ -11,10 +11,16 @@ import UIKit
 class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
     
     var items = [CheckListItem]()
+    var category: Category!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         loadItems()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = category.name
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

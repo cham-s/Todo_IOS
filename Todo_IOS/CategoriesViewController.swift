@@ -9,6 +9,17 @@
 import UIKit
 
 class AllListViewController: UITableViewController {
+    
+    var categories: [Category]
+    
+    required init?(coder aDecoder: NSCoder) {
+        categories = [Category]()
+        super.init(coder: aDecoder)
+        categories.append(Category(name: "Groceries"))
+        categories.append(Category(name: "To Do"))
+        categories.append(Category(name: "Movies"))
+        categories.append(Category(name: "Coll Apps"))
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,19 +40,29 @@ class AllListViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return categories.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = cellForTabbleView(tableView)
-        cell.textLabel!.text = "List \(indexPath.row)"
+        let category = categories[indexPath.row]
+        cell.textLabel!.text = category.name
+        cell.accessoryType = .DetailDisclosureButton
 
         return cell
     }
     
     // MARK: - UItableView Delegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("ShowList", sender: nil)
+        let category = categories[indexPath.row]
+        performSegueWithIdentifier("ShowList", sender: category)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowList" {
+            let controller = segue.destinationViewController as! ChecklistViewController
+            controller.category = sender as! Category
+        }
     }
     
     // MARK: - Custom Method
