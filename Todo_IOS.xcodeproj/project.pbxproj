@@ -16,6 +16,7 @@
 		6BC929DC1D01BD02004483E4 /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC929DB1D01BD02004483E4 /* AddItemViewController.swift */; };
 		6BC929DE1D022AA5004483E4 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC929DD1D022AA5004483E4 /* CategoriesViewController.swift */; };
 		6BC929E01D0231F2004483E4 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC929DF1D0231F2004483E4 /* Category.swift */; };
+		6BC929E21D023CBD004483E4 /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC929E11D023CBD004483E4 /* AddCategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		6BC929DB1D01BD02004483E4 /* AddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddItemViewController.swift; path = ../AddItemViewController.swift; sourceTree = "<group>"; };
 		6BC929DD1D022AA5004483E4 /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		6BC929DF1D0231F2004483E4 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		6BC929E11D023CBD004483E4 /* AddCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				6BC929D31CFFB316004483E4 /* ListViewController.swift */,
 				6BC929DD1D022AA5004483E4 /* CategoriesViewController.swift */,
 				6BC929DB1D01BD02004483E4 /* AddItemViewController.swift */,
+				6BC929E11D023CBD004483E4 /* AddCategoryViewController.swift */,
 				6BC929DF1D0231F2004483E4 /* Category.swift */,
 				6BC929D51D0143F7004483E4 /* CheckListItem.swift */,
 				6B330E621CFFB14400287BF3 /* Supporting */,
@@ -161,6 +164,7 @@
 				6BC929DE1D022AA5004483E4 /* CategoriesViewController.swift in Sources */,
 				6B330E511CFFAF2800287BF3 /* AppDelegate.swift in Sources */,
 				6BC929D41CFFB316004483E4 /* ListViewController.swift in Sources */,
+				6BC929E21D023CBD004483E4 /* AddCategoryViewController.swift in Sources */,
 				6BC929E01D0231F2004483E4 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

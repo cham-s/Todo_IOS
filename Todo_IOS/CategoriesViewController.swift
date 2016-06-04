@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllListViewController: UITableViewController {
+class AllListViewController: UITableViewController, AddCategoryViewControllerDelegate {
     
     var categories: [Category]
     
@@ -58,11 +58,42 @@ class AllListViewController: UITableViewController {
         performSegueWithIdentifier("ShowList", sender: category)
     }
     
+    // MARK: - Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowList" {
             let controller = segue.destinationViewController as! ChecklistViewController
             controller.category = sender as! Category
+        } else if segue.identifier == "AddCategory" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! AddCategoryViewController
+            controller.delegate = self
+            controller.categoryTodeEdit = nil
         }
+    }
+    
+    // MARK: - AddCategoryViewController Delegate
+    func addCategoryViewControllerDidCancel(controller: AddCategoryViewController)
+    {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func addCategoryViewController(controller: AddCategoryViewController, didFinishAddingCategory category: Category) {
+        let newRowIndex = categories.count
+        categories.append(category)
+        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func addCategoryViewController(controller: AddCategoryViewController, didFinishEditingCategory category: Category) {
+        if let index = categories.indexOf(category) {
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+                cell.textLabel!.text = category.name
+            }
+        }
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Custom Method

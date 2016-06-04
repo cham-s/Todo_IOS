@@ -5,6 +5,61 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
+        <!--Add Category-->
+        <scene sceneID="Dpe-Wf-0U5">
+            <objects>
+                <tableViewController id="cDA-Ve-26c" customClass="AddCategoryViewController" customModule="Todo_IOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="6sc-Lh-qmo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection id="gu3-fX-q1j">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="knz-Mr-Jdm">
+                                        <rect key="frame" x="0.0" y="99" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="knz-Mr-Jdm" id="JRi-wo-bOL">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Category Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u0R-B3-FlR">
+                                                    <rect key="frame" x="8" y="7" width="592" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="cDA-Ve-26c" id="GJy-Ff-7Z9"/>
+                            <outlet property="delegate" destination="cDA-Ve-26c" id="CFx-wl-Rjj"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Add Category" id="DK5-p2-gra">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="iaJ-wU-HKt">
+                            <connections>
+                                <action selector="cancel" destination="cDA-Ve-26c" id="WwL-ly-LMv"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="59Z-Eg-sRP">
+                            <connections>
+                                <action selector="done" destination="cDA-Ve-26c" id="ow9-BG-jpe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="categoryTextField" destination="u0R-B3-FlR" id="1Yf-ma-Hrf"/>
+                        <outlet property="doneBarButton" destination="59Z-Eg-sRP" id="KHs-f2-6kX"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9gY-aM-h5v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1266" y="1169"/>
+        </scene>
         <!--List-->
         <scene sceneID="9ke-Gp-9tM">
             <objects>
@@ -132,7 +187,13 @@ FhbiiJo
                             <outlet property="delegate" destination="gjL-54-2HU" id="m28-xg-7mo"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Categories" id="Fh8-4i-XRb"/>
+                    <navigationItem key="navigationItem" title="Categories" id="Fh8-4i-XRb">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="qLE-94-iB3">
+                            <connections>
+                                <segue destination="iFi-gd-bbY" kind="presentation" identifier="AddCategory" id="sMD-IE-hFV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="HPJ-hj-iHe" kind="show" identifier="ShowList" id="Wng-Mx-c0n"/>
                     </connections>
@@ -176,6 +237,24 @@ FhbiiJo
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YuJ-Sp-NBx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1764" y="368"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="IGp-Id-hUc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iFi-gd-bbY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eFp-Hx-vCV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="cDA-Ve-26c" kind="relationship" relationship="rootViewController" id="ipr-fL-kWS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7AD-NK-OCp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="454" y="1169"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
