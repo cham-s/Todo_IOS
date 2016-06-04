@@ -8,12 +8,22 @@
 
 import UIKit
 
-class Category: NSObject {
+class Category: NSObject, NSCoding {
     
     var name = ""
+    var items = [CheckListItem]()
     
     init(name: String) {
         self.name = name
+    }
+    required init?(coder aDecoder: NSCoder) {
+        name = aDecoder.decodeObjectForKey("Name") as! String
+        items = aDecoder.decodeObjectForKey("Items") as! [CheckListItem]
+        super.init()
+    }
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(name, forKey: "Name")
+        aCoder.encodeObject(items, forKey: "Items")
     }
 
 }

@@ -15,10 +15,7 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
     required init?(coder aDecoder: NSCoder) {
         categories = [Category]()
         super.init(coder: aDecoder)
-        categories.append(Category(name: "Groceries"))
-        categories.append(Category(name: "To Do"))
-        categories.append(Category(name: "Movies"))
-        categories.append(Category(name: "Coll Apps"))
+        loadCategories()
     }
 
     override func viewDidLoad() {
@@ -118,6 +115,38 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
             return cell
         } else {
             return UITableViewCell(style: .Default, reuseIdentifier: cellID)
+        }
+    }
+    
+    // save load data
+    
+    func saveCategories() {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        archiver.encodeObject(categories, forKey: "Categories")
+        archiver.finishEncoding()
+        data.writeToFile(dataFilePath(), atomically: true)
+    }
+    
+    func documentDirectory()  -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        
+        return paths[0]
+    }
+    
+    func dataFilePath()  -> String {
+        return (documentDirectory() as NSString)
+        .stringByAppendingString("/Categories")
+    }
+    
+    func loadCategories() {
+        let path = dataFilePath()
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+            if let data = NSData(contentsOfFile: path) {
+                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+                categories = unarchiver.decodeObjectForKey("Categories") as! [Category]
+                unarchiver.finishDecoding()
+            }
         }
     }
 
