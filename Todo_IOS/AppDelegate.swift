@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Todo_IOS
 //
-//  Created by gecko on 02/06/16.
+//  Created by cham-s‘ on 02/06/16.
 //  Copyright © 2016 StellarTech Media. All rights reserved.
 //
 
@@ -12,10 +12,13 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let dataModel = DataModel()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        let navigationController = window!.rootViewController as! UINavigationController
+        let controller = navigationController.topViewController as! AllListViewController
+        controller.dataModel = dataModel
         return true
     }
 
@@ -41,9 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func saveData(){
-        let navigationController = window!.rootViewController as! UINavigationController
-        let controller = navigationController.topViewController as! AllListViewController
-        controller.saveCategories()
+        dataModel.saveCategories()
     }
 
 

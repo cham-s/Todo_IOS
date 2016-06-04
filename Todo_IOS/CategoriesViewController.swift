@@ -10,14 +10,7 @@ import UIKit
 
 class AllListViewController: UITableViewController, AddCategoryViewControllerDelegate {
     
-    var categories: [Category]
-    
-    required init?(coder aDecoder: NSCoder) {
-        categories = [Category]()
-        super.init(coder: aDecoder)
-        loadCategories()
-    }
-
+    var dataModel: DataModel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,12 +30,12 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return categories.count
+        return dataModel.categories.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = cellForTabbleView(tableView)
-        let category = categories[indexPath.row]
+        let category = dataModel.categories[indexPath.row]
         cell.textLabel!.text = category.name
         cell.accessoryType = .DetailDisclosureButton
 
@@ -51,12 +44,12 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
     
     // MARK: - UItableView Delegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let category = categories[indexPath.row]
+        let category = dataModel.categories[indexPath.row]
         performSegueWithIdentifier("ShowList", sender: category)
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        categories.removeAtIndex(indexPath.row)
+        dataModel.categories.removeAtIndex(indexPath.row)
         let indexPaths = [indexPath]
         tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
     }
@@ -65,7 +58,7 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
         let navigationController = storyboard!.instantiateViewControllerWithIdentifier("AddCategoryNaviagationController") as! UINavigationController
         let controller = navigationController.topViewController as! AddCategoryViewController
         controller.delegate = self
-        let category = categories[indexPath.row]
+        let category = dataModel.categories[indexPath.row]
         controller.categoryTodeEdit = category
         presentViewController(navigationController, animated: true, completion: nil)
     }
@@ -89,8 +82,8 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
     }
     
     func addCategoryViewController(controller: AddCategoryViewController, didFinishAddingCategory category: Category) {
-        let newRowIndex = categories.count
-        categories.append(category)
+        let newRowIndex = dataModel.categories.count
+        dataModel.categories.append(category)
         let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
         let indexPaths = [indexPath]
         tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
@@ -98,7 +91,7 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
     }
     
     func addCategoryViewController(controller: AddCategoryViewController, didFinishEditingCategory category: Category) {
-        if let index = categories.indexOf(category) {
+        if let index = dataModel.categories.indexOf(category) {
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             if let cell = tableView.cellForRowAtIndexPath(indexPath) {
                 cell.textLabel!.text = category.name
@@ -118,36 +111,6 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
         }
     }
     
-    // save load data
-    
-    func saveCategories() {
-        let data = NSMutableData()
-        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
-        archiver.encodeObject(categories, forKey: "Categories")
-        archiver.finishEncoding()
-        data.writeToFile(dataFilePath(), atomically: true)
-    }
-    
-    func documentDirectory()  -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        
-        return paths[0]
-    }
-    
-    func dataFilePath()  -> String {
-        return (documentDirectory() as NSString)
-        .stringByAppendingString("/Categories")
-    }
-    
-    func loadCategories() {
-        let path = dataFilePath()
-        if NSFileManager.defaultManager().fileExistsAtPath(path) {
-            if let data = NSData(contentsOfFile: path) {
-                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
-                categories = unarchiver.decodeObjectForKey("Categories") as! [Category]
-                unarchiver.finishDecoding()
-            }
-        }
-    }
+
 
 }
