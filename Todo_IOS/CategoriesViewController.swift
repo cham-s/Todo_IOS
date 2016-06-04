@@ -58,6 +58,20 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
         performSegueWithIdentifier("ShowList", sender: category)
     }
     
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        categories.removeAtIndex(indexPath.row)
+        let indexPaths = [indexPath]
+        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+    }
+    
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        let navigationController = storyboard!.instantiateViewControllerWithIdentifier("AddCategoryNaviagationController") as! UINavigationController
+        let controller = navigationController.topViewController as! AddCategoryViewController
+        controller.delegate = self
+        let category = categories[indexPath.row]
+        controller.categoryTodeEdit = category
+        presentViewController(navigationController, animated: true, completion: nil)
+    }
     // MARK: - Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowList" {

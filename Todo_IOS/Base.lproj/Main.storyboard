@@ -245,7 +245,7 @@ FhbiiJo
         <!--Navigation Controller-->
         <scene sceneID="IGp-Id-hUc">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iFi-gd-bbY" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddCategoryNaviagationController" automaticallyAdjustsScrollViewInsets="NO" id="iFi-gd-bbY" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="eFp-Hx-vCV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
