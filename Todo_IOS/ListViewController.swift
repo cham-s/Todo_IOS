@@ -85,7 +85,6 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             if let cell = tableView.cellForRowAtIndexPath(indexPath) {
                 configureCheckMarkForCell(cell, withCheckItemListItem: item)
-                tableView.reloadData()
             }
         }
         dismissViewControllerAnimated(true, completion: nil)

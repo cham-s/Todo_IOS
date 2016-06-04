@@ -23,10 +23,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Category Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u0R-B3-FlR">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Category Name" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u0R-B3-FlR">
                                                     <rect key="frame" x="8" y="7" width="592" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="done" destination="cDA-Ve-26c" eventType="editingDidEndOnExit" id="zri-jK-FcE"/>
+                                                        <outlet property="delegate" destination="cDA-Ve-26c" id="re1-4q-gIp"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -53,7 +57,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="categoryTextField" destination="u0R-B3-FlR" id="1Yf-ma-Hrf"/>
-                        <outlet property="doneBarButton" destination="59Z-Eg-sRP" id="KHs-f2-6kX"/>
+                        <outlet property="doneBarButton" destination="59Z-Eg-sRP" id="8Pv-vC-dmp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9gY-aM-h5v" userLabel="First Responder" sceneMemberID="firstResponder"/>

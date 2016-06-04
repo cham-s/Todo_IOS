@@ -15,8 +15,10 @@ protocol AddCategoryViewControllerDelegate: class {
 }
 
 class AddCategoryViewController: UITableViewController, UITextFieldDelegate {
+    
     @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+
     
     weak var delegate: AddCategoryViewControllerDelegate?
     
@@ -24,12 +26,16 @@ class AddCategoryViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let category = categoryTodeEdit {
-            title = "Edit Category"
+            title = "Edit Item"
             categoryTextField.text = category.name
             doneBarButton.enabled = true
-            categoryTextField.delegate = self
         }
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -37,16 +43,11 @@ class AddCategoryViewController: UITableViewController, UITextFieldDelegate {
         categoryTextField.becomeFirstResponder()
     }
     
-    // MARK - UItableView Delegate
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return nil
-    }
-    
-    // MARK - UItextfieldDelegate
+    // MARK: UITexField Delegate
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let oldtext: NSString = textField.text!
-        let newtext: NSString = oldtext.stringByReplacingCharactersInRange(range, withString: string)
-        doneBarButton.enabled = newtext.length < 0
+        let oldText: NSString = textField.text!
+        let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
+        doneBarButton.enabled = newText.length > 0
         return true
     }
     
