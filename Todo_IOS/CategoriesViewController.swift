@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllListViewController: UITableViewController, AddCategoryViewControllerDelegate {
+class AllListViewController: UITableViewController, AddCategoryViewControllerDelegate, UINavigationControllerDelegate {
     
     var dataModel: DataModel!
     override func viewDidLoad() {
@@ -19,6 +19,19 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.delegate = self
+        
+        let index = dataModel.indexOfSelectedCategory
+        
+        if index >= 0 && index < dataModel.categories.count {
+            let category = dataModel.categories[index]
+            performSegueWithIdentifier("ShowList", sender: category)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,6 +57,7 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
     
     // MARK: - UItableView Delegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        dataModel.indexOfSelectedCategory = indexPath.row
         let category = dataModel.categories[indexPath.row]
         performSegueWithIdentifier("ShowList", sender: category)
     }
@@ -62,8 +76,16 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
         controller.categoryTodeEdit = category
         presentViewController(navigationController, animated: true, completion: nil)
     }
+    
+    // MARK: - UINavigation Controller Delegate
+    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+        if viewController == self {
+            dataModel.indexOfSelectedCategory = -1
+        }
+    }
     // MARK: - Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if segue.identifier == "ShowList" {
             let controller = segue.destinationViewController as! ChecklistViewController
             controller.category = sender as! Category
@@ -110,7 +132,4 @@ class AllListViewController: UITableViewController, AddCategoryViewControllerDel
             return UITableViewCell(style: .Default, reuseIdentifier: cellID)
         }
     }
-    
-
-
 }

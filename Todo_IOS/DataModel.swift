@@ -10,9 +10,20 @@ import Foundation
 
 class DataModel {
     var categories = [Category]()
+    var indexOfSelectedCategory: Int {
+        get {
+           return NSUserDefaults.standardUserDefaults().integerForKey("CategoryIndex")
+        }
+        set {
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "CategoryIndex")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
     
     init(){
         loadCategories()
+        registerDefaults()
+        handleFirstTime()
     }
     
     func saveCategories() {
@@ -43,5 +54,23 @@ class DataModel {
                 unarchiver.finishDecoding()
             }
         }
+    }
+    
+    func registerDefaults() {
+        let dictionary = ["CategoryIndex": -1, "FirstTime": true]
+        NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
+    }
+    
+    func handleFirstTime() {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let firstTime = userDefaults.boolForKey("FirstTime")
+        if firstTime {
+            let category = Category(name: "List")
+            categories.append(category)
+            indexOfSelectedCategory = 0
+            userDefaults.setBool(false, forKey: "FirsTime")
+            userDefaults.synchronize()
+        }
+        
     }
 }
